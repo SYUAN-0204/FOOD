@@ -10,14 +10,143 @@
 
 <body>
     <div id="content">
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid ducimus vel quibusdam optio? Fugit, nisi?
+        <div id="question-text">
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid ducimus vel quibusdam optio? Fugit, nisi?
             Ducimus, maiores sequi omnis, impedit suscipit sapiente excepturi eligendi vero autem adipisci, natus nobis
-            tempora.</p>
+            tempora.
+        </div>
         <div id="btnArea">
             <button class="checkBtn">A</button>
             <button class="checkBtn">B</button>
         </div>
+        <div id="scoreArea" style="display:none;"></div>
     </div>
+
+
+    <script>
+        const questions = [
+            {
+                html: `
+                <p>(1/5)</p>
+                <p>Which color is more likely to appear in Taiwanese food?</p>
+                A
+                <img src="Q1-1.jpg" style="width: 40%;">
+                B
+                <img src="Q1-2.jpg" style="width: 40%;">
+                `,
+                choices: ['A', 'B'],
+                answer: 'A',
+                choiceTexts: {
+                    A: '',
+                    B: ''
+                }
+            },
+            {
+                html: `
+                <p>(2/5)</p>
+                <p>Which one is more likely to be a typical Taiwanese breakfast?</p>
+                A
+                <img src="Q2-1.jpg" style="width: 40%;">
+                B
+                <img src="Q2-2.jpg" style="width: 40%;">
+                `,
+                choices: ['A', 'B'],
+                answer: 'B',
+                choiceTexts: {
+                    A: '',
+                    B: ''
+                }
+            },
+            {
+                html: `
+                <p>(3/5)</p>
+                <p>Has this food ever existed in Taiwan?</p>
+                <img src="Q3.jpg" style="width: 40%;">
+                `,
+                choices: ['A', 'B'],
+                answer: 'A',
+                choiceTexts: {
+                    A: 'YES',
+                    B: 'NO'
+                }
+            },
+            {
+                html: `
+                <p>(4/5)</p>
+                <p>What is this food made of?</p>
+                <img src="Q4.jpg" style="width: 40%;">
+                <p>A. Pig's blood</p>
+                <p>B. Brown sugar</p>
+                `,
+                choices: ['A', 'B'],
+                answer: 'A',
+                choiceTexts: {
+                    A: '',
+                    B: ''
+                }
+            },
+            {
+                html: `
+                <p>(5/5)</p>
+                <p>Is this food sweet or salty?</p>
+                <img src="Q5.jpg" style="width: 40%;">
+                <p>A. sweet</p>
+                <p>B. salty</p>
+                `,
+                choices: ['A', 'B'],
+                answer: 'B',
+                choiceTexts: {
+                    A: '',
+                    B: ''
+                }
+            }
+        ];
+
+        let currentIndex = 0;
+        let score = 0;
+
+        const questionTextEl = document.getElementById('question-text');
+        const btnAreaEl = document.getElementById('btnArea');
+        const scoreAreaEl = document.getElementById('scoreArea');
+
+        function loadQuestion(index) {
+            const q = questions[index];
+            questionTextEl.innerHTML = q.html;
+
+            btnAreaEl.innerHTML = '';
+            q.choices.forEach(choice => {
+                const btn = document.createElement('button');
+                btn.classList.add('checkBtn');
+                btn.textContent = choice + '. ' + (q.choiceTexts ? q.choiceTexts[choice] : choice);
+                btn.disabled = false;
+                btn.onclick = () => {
+                    // 點選後判斷答案
+                    if (choice === q.answer) {
+                        score++;
+                    }
+                    // 禁用所有按鈕
+                    Array.from(btnAreaEl.children).forEach(b => b.disabled = true);
+
+                    currentIndex++;
+                    if (currentIndex < questions.length) {
+                        loadQuestion(currentIndex);
+                    } else {
+                        showScore();
+                    }
+                };
+                btnAreaEl.appendChild(btn);
+            });
+        }
+
+        function showScore() {
+            questionTextEl.style.display = 'none';
+            btnAreaEl.style.display = 'none';
+            scoreAreaEl.style.display = 'block';
+            scoreAreaEl.innerHTML = `<p>That’s it!</p><p>Your total score is ${score} / ${questions.length}.</p>`;
+        }
+
+        loadQuestion(currentIndex);
+    </script>
 </body>
 
 </html>
