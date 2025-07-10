@@ -142,7 +142,10 @@
             questionTextEl.style.display = 'none';
             btnAreaEl.style.display = 'none';
             scoreAreaEl.style.display = 'block';
-            scoreAreaEl.innerHTML = `<p>That’s it!</p><p>Your total score is ${score} / ${questions.length}.</p>`;
+            scoreAreaEl.innerHTML =
+                `<p>🎉 You made it to the end!</p>
+            <p>Your score: <strong>${score}</strong> out of <strong>${questions.length}</strong></p>
+            <p>Thanks for joining!</p>`;
         }
 
         loadQuestion(currentIndex);
