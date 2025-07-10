@@ -19,6 +19,7 @@ body {
 
 button.checkBtn {
     width: 30%;
+    height: 20%;
     background: none;
     border: 1px solid #BEA594;
     color: #BEA594;

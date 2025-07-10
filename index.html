@@ -66,8 +66,8 @@
                 choices: ['A', 'B'],
                 answer: 'A',
                 choiceTexts: {
-                    A: 'YES',
-                    B: 'NO'
+                    A: '. YES',
+                    B: '. NO'
                 }
             },
             {
@@ -117,7 +117,7 @@
             q.choices.forEach(choice => {
                 const btn = document.createElement('button');
                 btn.classList.add('checkBtn');
-                btn.textContent = choice + '. ' + (q.choiceTexts ? q.choiceTexts[choice] : choice);
+                btn.textContent = choice + (q.choiceTexts ? q.choiceTexts[choice] : choice);
                 btn.disabled = false;
                 btn.onclick = () => {
                     // 點選後判斷答案
